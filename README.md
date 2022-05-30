@@ -1,6 +1,9 @@
-# eJPTv2
- Cheat sheets for eJPTv2
+---
+coverY: 0
+---
 
-## Recon
+# Welcome!
 
-## Enumeration
+## Welcome aboard!
+
+Welcome to the company wiki! Here you'll find everything you need to know about the company.
