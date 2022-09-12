@@ -1,9 +1,6 @@
 ---
-coverY: 0
+description: All the commands I ran in the eJPTv2 (PTSv2) course/exam.
 ---
 
-# Welcome!
+# eJPTv2 Cheat Sheet
 
-## Welcome aboard!
-
-Welcome to the company wiki! Here you'll find everything you need to know about the company.
