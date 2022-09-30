@@ -1,3 +1,233 @@
+# Information Gathering
+
+## Passive Information Gathering
+
+We are looking for:
+
+- IP addresses
+- Directories hidden from search engines
+- Names
+- Email addresses
+- Phone Numbers
+- Physical Addresses
+- Web technologies being used
+
+### DNS lookup utility:
+
+```bash
+host thesite.domain
+```
+
+If you ever see two IP addresses returned from this query know that you are dealing with some form of proxy. 
+
+### Common files to look for
+
+- `robots.txt`
+- `sitemap.xml` or `sitemaps.xml`
+
+### Basic information about a specific website
+
+```bash
+whatweb thesite.domain
+```
+
+### Copy an entire website
+
+[https://www.httrack.com/](https://www.httrack.com/)
+
+### WHOIS Enumeration
+
+```bash
+whois thesite.domain
+```
+
+### Netcraft collection
+
+[https://www.netcraft.com/](https://www.netcraft.com/) 
+
+### DNS Recon
+
+```bash
+dnsrecon -d thesite.domain
+```
+
+Alternatively use [dnsdumpster.com](http://dnsdumpster.com)
+
+### wafw00f
+
+```bash
+wafw00f -a thesite.domain
+```
+
+### sublist3r
+
+Passive subdomain enumeration with the ability for brute force.
+
+```bash
+sublist3r -d thesite.domain -e google,yahoo
+```
+
+### Google hacking
+Database of google hacking: [https://www.exploit-db.com/google-hacking-database](https://www.exploit-db.com/google-hacking-database)
+`site:site.com` gives back results that only come from the domain example.com and subdomains. This could be used for enumeration of subdomains and pages.
+`site:site.com inurl:admin` gives back url:s from the specified domain with “admin” in it.
+`site:*.site.com` this will not show site.com but it will show subdomains instead. 
+`site:*.site.com intitle:admin` Will limit the results with admin in the title for subdomains for the target.
+`site:site.com filetype:fileextension` Shows results of specified filetype.
+`site:site.com employees` Standard search query on the specified site.
+`intitle:"index of"` this is a common vulnerability inside webservers. 
+`cache:site.com` shows you the google web cache for the specified domain. 
+`inurl:auth_user_file.txt` This searches for passwords and usernames in text files.
+
+### theHarvester
+
+The tool gathers emails, names, subdomains, IPs and URLs using multiple public data sources.
+
+```bash
+theHarvester -d thesite.domain -b SEARCH,ENGINES
+```
+
+### Leaked password databases
+
+[haveibeenpwned.com](http://haveibeenpwned.com) is a very good site for data breaches. If you find an e-mail see if has leaked creds.
+
+## Active Information Gathering
+
+You need proper authorization in order to do this step.
+
+### DNS Records
+
+Some common types of records
+- A - Resolves a hostname or domain to an IPv4 address.
+- AAAA - Resolves a hostname or domain to an IPv6 address.
+- NS - Reference to the domains nameserver.
+- MX - Resolves a domain to a mail server.
+- CNAME - Used for domain aliases.
+- TXT - Text record.
+- HINFO - Host information.
+- SOA - Domain authority.
+- SRV - Service records.
+- PTR - Resolves an IP address to a hostname.
+
+
+```bash
+##Will try a bunch of things including zone transfer but also brute force enumeration of subdomains.
+dnsenum target.site
+
+##Standard dig query
+dig target.site
+
+##`axfr` is the zone transfer option which will essentially try to perform a zone transfer.
+dig axfr @name.server target.site
+
+##Enumeration using fierce. Meant as a precursor to an nmap (or any active) scan.
+fierce -dns target.site
+```
+
+## Host discovery
+
+```bash
+##Getting your own IP address and submask
+ip a s
+
+##Pingsweep via nmap
+sudo nmap -sn 192.168.1.0/24 #Or whatever CIDR notation you have
+
+##Discovery via ARP using netdiscover
+netdiscover -i eth0 -r 192.168.1.0/24 #or whatever CIDR notation you have
+```
+
+## Port scanning
+
+```bash
+default scan with nmap
+nmap $ip #syn scan of IP and top 1000 ports
+
+##Assume that host is online if they are blocking ICMP
+nmap -Pn $ip
+```
+
+Scan all ports instead of just 1000
+
+```bash
+nmap -Pn -p- $ip
+```
+
+Scan specific ports
+
+```bash
+nmap -Pn -p 80,443,3389 $ip
+```
+
+Scan port range
+
+```bash
+nmap -Pn -p1-1000 $ip
+```
+
+Fast scan
+
+```bash
+nmap -Pn -F $ip
+```
+
+UDP scan
+
+```bash
+nmap -Pn -sU $ip
+```
+
+Service scan
+
+```bash
+nmap -Pn -sV $ip
+```
+
+OS scan
+
+```bash
+nmap -Pn -O $ip
+```
+
+Default enumeration scripts
+
+```bash
+nmap -Pn -sC $ip
+```
+
+Speed template
+
+```bash
+nmap -Pn -T[0-5] $ip #0 slowest, 5 fastest
+```
+
+Output to txt file
+
+```bash
+nmap -Pn $ip -oN output.txt
+```
+
+Output to xml file
+
+```bash
+nmap -Pn $ip -oX output.xml
+```
+
+Aggressive scan
+
+```bash
+nmap -Pn -A $ip #Aggressive scan combines -O -sV -sC into one
+```
+
+Example usage
+
+```bash
+nmap -Pn -F -A -T4 $ip -oN scanoutput.txt
+```
+
+
+
+
 # SMB
 
 SMB is windows implementation of a file share. The common name for implementing SMB is CIFS, Common Internet File System. SMB stands for **Server Message Block** and it basically works the same as any CIFS would. **135, 139, 445** is common to see open on windows machines. 445 is SMB or CIFS operate on. 139 is netbios, it usually sets up the session for SMB. SMB also has a Linux variation called Samba and it works on the mainly on the same port, **445**.
@@ -9,9 +239,9 @@ Everything we find should be written down in a document and potentially dangerou
 ### Mounting and deleting a drive on windows through powershell
 
 ```bash
-## Mounting
-net_use <: \\ip\c$ PASSWORD /user:administrator
-## Deleting
+## Mounting a drive
+net_use <: \\ip\DRIVENAME PASSWORD /user:administrator
+## Deleting a drive
 net_use * /delete
 ```
 
