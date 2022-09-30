@@ -12,21 +12,12 @@ We are looking for:
 - Physical Addresses
 - Web technologies being used
 
-### DNS lookup utility:
-
-```bash
-host thesite.domain
-```
-
-If you ever see two IP addresses returned from this query know that you are dealing with some form of proxy. 
-
 ### Common files to look for
 
 - `robots.txt`
 - `sitemap.xml` or `sitemaps.xml`
 
 ### Basic information about a specific website
-
 ```bash
 whatweb thesite.domain
 ```
@@ -36,13 +27,11 @@ whatweb thesite.domain
 [https://www.httrack.com/](https://www.httrack.com/)
 
 ### WHOIS Enumeration
-
 ```bash
 whois thesite.domain
 ```
 
 ### Netcraft collection
-
 [https://www.netcraft.com/](https://www.netcraft.com/) 
 
 ### DNS Recon
@@ -54,43 +43,52 @@ dnsrecon -d thesite.domain
 Alternatively use [dnsdumpster.com](http://dnsdumpster.com)
 
 ### wafw00f
-
 ```bash
+##Checks for webapp firewall
 wafw00f -a thesite.domain
 ```
 
 ### sublist3r
-
-Passive subdomain enumeration with the ability for brute force.
-
 ```bash
+##Passive subdomain enumeration with the ability for brute force.
 sublist3r -d thesite.domain -e google,yahoo
 ```
 
 ### Google hacking
 Database of google hacking: [https://www.exploit-db.com/google-hacking-database](https://www.exploit-db.com/google-hacking-database)
+```bash
+##gives back results that only come from the domain example.com and subdomains. This could be used for enumeration of subdomains and pages.
+site:site.com 
 
-`site:site.com` gives back results that only come from the domain example.com and subdomains. This could be used for enumeration of subdomains and pages.
+##gives back url:s from the specified domain with “admin” in it.
+site:site.com inurl:admin 
 
-`site:site.com inurl:admin` gives back url:s from the specified domain with “admin” in it.
+##this will not show site.com but it will show subdomains instead. 
+site:*.site.com 
 
-`site:*.site.com` this will not show site.com but it will show subdomains instead. 
+##Will limit the results with admin in the title for subdomains for the target.
+site:*.site.com intitle:admin 
 
-`site:*.site.com intitle:admin` Will limit the results with admin in the title for subdomains for the target.
+##Shows results of specified filetype.
+site:site.com filetype:fileextension 
 
-`site:site.com filetype:fileextension` Shows results of specified filetype.
+##Standard search query on the specified site.
+site:site.com employees 
 
-`site:site.com employees` Standard search query on the specified site.
+##this is a common vulnerability inside webservers.
+intitle:"index of"  
 
-`intitle:"index of"` this is a common vulnerability inside webservers. 
+##shows you the google web cache for the specified domain. 
+cache:site.com
 
-`cache:site.com` shows you the google web cache for the specified domain. 
-
-`inurl:auth_user_file.txt` This searches for passwords and usernames in text files.
+##This searches for passwords and usernames in text files.
+inurl:auth_user_file.txt 
+```
 
 ### theHarvester
 
 The tool gathers emails, names, subdomains, IPs and URLs using multiple public data sources.
+While it is a cool tool it is never mentioned again.
 
 ```bash
 theHarvester -d thesite.domain -b SEARCH,ENGINES
@@ -104,7 +102,7 @@ theHarvester -d thesite.domain -b SEARCH,ENGINES
 
 You need proper authorization in order to do this step.
 
-### DNS Records
+### DNS
 
 Some common types of records
 - A - Resolves a hostname or domain to an IPv4 address.
@@ -120,6 +118,10 @@ Some common types of records
 
 
 ```bash
+##DNS lookup utility
+#If you ever see two IP addresses returned from this query know that you are dealing with some form of proxy.
+host thesite.domain
+
 ##Will try a bunch of things including zone transfer but also brute force enumeration of subdomains.
 dnsenum target.site
 
@@ -154,88 +156,47 @@ nmap $ip #syn scan of IP and top 1000 ports
 
 ##Assume that host is online if they are blocking ICMP
 nmap -Pn $ip
-```
 
-Scan all ports instead of just 1000
-
-```bash
+##Scan all ports instead of just 1000
 nmap -Pn -p- $ip
-```
 
-Scan specific ports
-
-```bash
+##Scan specific ports
 nmap -Pn -p 80,443,3389 $ip
-```
 
-Scan port range
-
-```bash
+##Scan port range
 nmap -Pn -p1-1000 $ip
-```
 
-Fast scan
-
-```bash
+##Fast scan
 nmap -Pn -F $ip
-```
 
-UDP scan
-
-```bash
+##UDP scan
 nmap -Pn -sU $ip
-```
 
-Service scan
-
-```bash
+##Service scan
 nmap -Pn -sV $ip
-```
 
-OS scan
-
-```bash
+##OS scan
 nmap -Pn -O $ip
-```
 
-Default enumeration scripts
-
-```bash
+##Default enumeration scripts
 nmap -Pn -sC $ip
-```
 
-Speed template
-
-```bash
+##Speed template
 nmap -Pn -T[0-5] $ip #0 slowest, 5 fastest
-```
 
-Output to txt file
-
-```bash
+##Output to txt file
 nmap -Pn $ip -oN output.txt
-```
 
-Output to xml file
-
-```bash
+##Output to xml file
 nmap -Pn $ip -oX output.xml
-```
 
-Aggressive scan
 
-```bash
-nmap -Pn -A $ip #Aggressive scan combines -O -sV -sC into one
-```
+##Aggressive, -A, scan combines -O -sV -sC into one
+nmap -Pn -A $ip 
 
-Example usage
-
-```bash
+##Example usage
 nmap -Pn -F -A -T4 $ip -oN scanoutput.txt
 ```
-
-
-
 
 # SMB
 
