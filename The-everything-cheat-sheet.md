@@ -69,14 +69,23 @@ sublist3r -d thesite.domain -e google,yahoo
 
 ### Google hacking
 Database of google hacking: [https://www.exploit-db.com/google-hacking-database](https://www.exploit-db.com/google-hacking-database)
+
 `site:site.com` gives back results that only come from the domain example.com and subdomains. This could be used for enumeration of subdomains and pages.
+
 `site:site.com inurl:admin` gives back url:s from the specified domain with “admin” in it.
+
 `site:*.site.com` this will not show site.com but it will show subdomains instead. 
+
 `site:*.site.com intitle:admin` Will limit the results with admin in the title for subdomains for the target.
+
 `site:site.com filetype:fileextension` Shows results of specified filetype.
+
 `site:site.com employees` Standard search query on the specified site.
+
 `intitle:"index of"` this is a common vulnerability inside webservers. 
+
 `cache:site.com` shows you the google web cache for the specified domain. 
+
 `inurl:auth_user_file.txt` This searches for passwords and usernames in text files.
 
 ### theHarvester
