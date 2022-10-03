@@ -715,15 +715,17 @@ enum4linux -a -u user -p password $ip
 I actually didn't think this section gave me really anything and the explanations were not really good enough.
 
 # Metasploit
-This is going to be a huge section.
+Excellent material. This is going to be a huge section.
 
 # Exploitation
+Excellent material.
 
 # Post-Exploitation
+Excellent material.
 
 # Social engineering
 This feels tacked on.
 
 # Web Application Penetration Testing
 The concepts and foundational knowledge is not explained good enough. Don't even think the OWASP top 10 is mentioned once. 
-If you've got the time use burp academy here instead or go through the Junior Penetration Tester start on tryhackme.
+If you've got the time use burp academy here instead or go through the Junior Penetration Tester path on tryhackme.
