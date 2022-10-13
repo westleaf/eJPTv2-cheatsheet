@@ -712,7 +712,7 @@ enum4linux -a -u user -p password $ip
 ```
 
 # Network-based attacks
-I actually didn't think this section gave me really anything and the explanations were not really good enough.
+I actually didn't think this section was that informative. It cover what was on the exam but if you want to actually learn this I would recommend just looking up the topics on youtube instead.
 
 # Metasploit
 Excellent material. This is going to be a huge section.
