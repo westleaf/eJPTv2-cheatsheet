@@ -716,6 +716,58 @@ I actually didn't think this section was that informative. It cover what was on 
 
 # Metasploit
 Excellent material. This is going to be a huge section.
+Some of these commands are in msf, some are not.
+
+```bash
+##Updating and upgrading to the latest version
+sudo apt-get update && sudo apt-get install metasploit-framework
+
+##Starting the msfdb
+sudo msfdb init
+
+##Starting the postgresql db and msf
+sudo systemctl start postgresql && msfconsole
+
+##Checking so that msf is connected to the database
+db_status
+```
+
+## Workspaces
+```bash
+##Adding a workspace
+workspace -a NAME
+
+##Switch to a workspace
+workspace NAME
+
+##Delete a workspace
+workspace -d NAME
+
+##Renaming a workspace
+workspace -r beforeName afterName
+```
+## Enumeration with MSF
+```bash
+##Importing nmap scan
+db_import /root/somescan
+
+##Checking what has been found
+hosts
+
+services
+
+loot
+
+vulns
+
+##Running an nmap scan straight into the database
+db_nmap [options] $ip
+
+##Portscan modules
+search portscan
+
+```
+
 
 # Exploitation
 Excellent material.
